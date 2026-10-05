@@ -19,19 +19,21 @@ A mathematical generalization of $k$-in-a-row alignment games played on an $m \t
 * **Configurable Board Rules:** Fully parametrized dimensions where $m$ is the row count, $n$ is the column count, and $k$ represents the consecutive alignment target required to win (generalizing Tic-Tac-Toe $3,3,3$, Gomoku $15,15,5$, and Connect Four variants).
 * **Alignment Detection:** Efficient directional scanning algorithms validating horizontal, vertical, and diagonal win configurations.
 * **Automated Opponent (AI):**
-  * **Easy (fácil):** Selects random valid empty cells.
-  * **Normal (normal):** Evaluates tactical opportunities to score an immediate win or block the opponent from winning on the subsequent turn.
-  * **Hard (difícil):** Deeper positional evaluation prioritizing central cells, intercepting opponent sequences, and building dual-threat winning lines.
+  * **Easy (fácil):** Selects an empty cell adjacent to its own existing stones; if none exists, picks the first free cell prioritized by proximity to the board center.
+  * **Normal (normal):** Evaluates lines of length $L \le k$ to either extend its own winning sequence or block the opponent from reaching $L$ consecutive stones.
+  * **Hard (difícil):** Prioritizes immediate win/block opportunities, then performs full-game lookahead simulations (`tab_simulacao`) for candidate moves assuming alternating play under normal strategy, choosing the position leading to guaranteed victory or a draw.
 
 ### 2. Orbito Game Engine (`orbito/`)
 
 A dynamic strategic board game featuring shifting concentric tracks:
-* **The Orbito Mechanism:** After placing a stone, the board's concentric orbital rings shift by 1 position (clockwise on outer track, counter-clockwise on inner track), altering spatial relationships every turn.
-* **Abstract Data Types (ADTs):** Built strictly following functional programming specifications with immutable data structures:
-  * `posicao`: Coordinate representation handling alphanumeric conversions (`a1` to `d4`).
-  * `pedra`: Marker states representing Black (`X`), White (`O`), or Neutral (` `).
-  * `tabuleiro`: Matrix abstraction handling validation, piece placement, and orbital shifts.
-* **Game Modes:** 2-Player local match and Player vs. Computer with automated strategy.
+* **The Orbito Mechanism:** After placing a stone, all concentric orbital rings shift by 1 position in the **counter-clockwise** direction, altering spatial alignments every turn.
+* **Abstract Data Types (ADTs):** Designed around clear ADT boundaries:
+  * `posicao`: Immutable coordinate pair handling alphanumeric conversions (`a1` to `d4`).
+  * `pedra`: Immutable marker representations for Black (`X`), White (`O`), and Neutral (` `).
+  * `tabuleiro`: Mutable matrix abstraction modified in-place across piece placements and orbital rotations.
+* **Automated Opponent (AI):**
+  * **Easy (fácil):** Anticipates the subsequent single orbital shift to position stones adjacent to its own pieces post-rotation.
+  * **Normal (normal):** Evaluates two steps ahead (post-rotation board states) to seize immediate winning alignments or block opponent alignments.
 
 ---
 
@@ -79,8 +81,10 @@ python3 orbito/orbito.py
 
 ---
 
-## Author
+## Author & Acknowledgments
 
 * **David Vasques** ([@DeastV](https://github.com/DeastV))
 
-*Instituto Superior Técnico — Universidade de Lisboa (2024/2025)*
+Coursework projects developed for Fundamentos da Programação at Instituto Superior Técnico, Universidade de Lisboa.
+
+*Course-Provided Specifications:* Game rules and interface specifications were formulated by the Fundamentos da Programação teaching staff. The MIT License applies to the implementation of data abstractions, heuristics, board transformation algorithms, and interactive game loops.
