@@ -1,5 +1,3 @@
-# This is the Python script for your project
-#ProjetoFp
 def eh_tabuleiro(arg):
     '''eh_tabuleiro(arg) vai receber um argumento e verifica se o argumento eh um tabuleiro,
     caso seja um tabuleiro devolve True, se nao for devolve False.

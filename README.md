@@ -1,8 +1,6 @@
 # Python Board Game Engines — m,n,k & Orbito
 
 [![Language](https://img.shields.io/badge/Language-Python%203-blue.svg)](https://www.python.org/)
-[![Paradigm](https://img.shields.io/badge/Paradigm-Functional%20%26%20ADTs-orange.svg)]()
-[![AI](https://img.shields.io/badge/AI-Heuristic%20Bot-green.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A collection of terminal-based strategy board game engines and automated heuristic bots implemented in Python. The projects explore grid manipulation, abstract data type (ADT / TAD) formulation, functional programming patterns, and automated game heuristics.
@@ -21,7 +19,7 @@ A mathematical generalization of $k$-in-a-row alignment games played on an $m \t
 * **Automated Opponent (AI):**
   * **Easy (fácil):** Selects an empty cell adjacent to its own existing stones; if none exists, picks the first free cell prioritized by proximity to the board center.
   * **Normal (normal):** Evaluates lines of length $L \le k$ to either extend its own winning sequence or block the opponent from reaching $L$ consecutive stones.
-  * **Hard (difícil):** Prioritizes immediate win/block opportunities, then performs full-game lookahead simulations (`tab_simulacao`) for candidate moves assuming alternating play under normal strategy, choosing the position leading to guaranteed victory or a draw.
+  * **Hard (difícil):** Prioritizes immediate win/block opportunities, then performs full-game lookahead simulations (`tab_simulacao`) for candidate moves assuming alternating play under normal strategy, selecting candidate moves that yield simulated victories.
 
 ### 2. Orbito Game Engine (`orbito/`)
 
@@ -81,10 +79,14 @@ python3 orbito/orbito.py
 
 ---
 
-## Author & Acknowledgments
+## Known Limitations
+
+* **Simulation Branching in Hard AI:** The rollout evaluation in m,n,k hard mode executes single-path simulations per candidate move against normal heuristic play rather than full minimax search with alpha-beta pruning.
+* **Turn Tie-Breaking:** When multiple candidate positions evaluate to identical heuristics, the bot breaks ties based on matrix traversal order rather than random selection.
+
+---
+
+## Credits
 
 * **David Vasques** ([@DeastV](https://github.com/DeastV))
-
-Coursework projects developed for Fundamentos da Programação at Instituto Superior Técnico, Universidade de Lisboa.
-
-*Course-Provided Specifications:* Game rules and interface specifications were formulated by the Fundamentos da Programação teaching staff. The MIT License applies to the implementation of data abstractions, heuristics, board transformation algorithms, and interactive game loops.
+* Coursework projects developed for Fundamentos da Programação at Instituto Superior Técnico, Universidade de Lisboa. Game specifications and validation test suites provided by the teaching staff.
